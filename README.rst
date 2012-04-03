@@ -11,7 +11,7 @@ dependencies.
 
 Fork reason
 -----------
-The original virtualenvwrapper is at [bitbucket](https://bitbucket.org/dhellmann/virtualenvwrapper).¬
+The original virtualenvwrapper is at `bitbucket <https://bitbucket.org/dhellmann/virtualenvwrapper>`_.
 Fork reason: mercurial + bitbucket is mine and some others' developers nightmare,
 so I brought it to here (github) and put it under git control.
 The original license will be preserved.
