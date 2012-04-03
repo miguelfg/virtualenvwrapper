@@ -1,5 +1,3 @@
-..   -*- mode: rst -*-
-
 #################
 virtualenvwrapper
 #################
@@ -91,7 +89,7 @@ Support
 
 Join the `virtualenvwrapper Google Group
 <http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
-issues and features.  
+issues and features.
 
 Report bugs via the `bug tracker on BitBucket
 <http://bitbucket.org/dhellmann/virtualenvwrapper/>`__.

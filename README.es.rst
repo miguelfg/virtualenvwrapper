@@ -1,5 +1,3 @@
-..   -*- mode: rst -*-
-
 #################
 virtualenvwrapper
 #################
@@ -54,7 +52,7 @@ Contribuciones
 Antes de contribuir con nuevas características al *core* de virtualenvwrapper,
 por favor considera, en vez, si no debe ser implementada como una extensión.
 
-Ve a la `documentación para desarrolladores 
+Ve a la `documentación para desarrolladores
 <http://www.doughellmann.com/docs/virtualenvwrapper/developers.html>`__
 por trucos sobre parches.
 
