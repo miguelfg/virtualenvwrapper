@@ -1,11 +1,7 @@
-#!/bin/sh
-
-#set -x
+# -*- mode: shell-script -*-
 
 test_dir=$(dirname $0)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
-export PROJECT_HOME="$(echo ${TMPDIR:-/tmp}/PROJECT_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     (cd "$test_dir/testtemplate" && rm -rf build && "$VIRTUAL_ENV/bin/python" setup.py install)

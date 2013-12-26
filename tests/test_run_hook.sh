@@ -1,10 +1,7 @@
-#!/bin/sh
-
-#set -x
+# -*- mode: shell-script -*-
 
 test_dir=$(cd $(dirname $0) && pwd)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
@@ -65,13 +62,6 @@ test_virtualenvwrapper_run_hook_permissions() {
     expected=""
     assertSame "$expected" "$output"
     assertSame "Errno 13] Permission denied" "$error"
-}
-
-test_virtualenvwrapper_run_hook_without_log_dir() {
-    old_log_dir="$VIRTUALENVWRAPPER_LOG_DIR"
-    unset VIRTUALENVWRAPPER_LOG_DIR
-    assertFalse "virtualenvwrapper_run_hook initialize"
-    export VIRTUALENVWRAPPER_LOG_DIR="$old_log_dir"
 }
 
 . "$test_dir/shunit2"

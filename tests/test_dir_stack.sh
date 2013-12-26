@@ -1,12 +1,7 @@
-#!/bin/sh
-
-#set -x
+# -*- mode: shell-script -*-
 
 test_dir=$(cd $(dirname $0) && pwd)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
-
-#unset HOOK_VERBOSE_OPTION
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     test_begin_dir=$(pwd)
@@ -34,6 +29,7 @@ tearDown() {
 }
 
 test_ticket_101 () {
+    [ ! -z "$KSH_VERSION" ] && echo "Skipping test under ksh"  && return 0
     mkvirtualenv some_env
     deactivate
     cd "$WORKON_HOME/start_here"

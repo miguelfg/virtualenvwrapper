@@ -1,10 +1,7 @@
-#!/bin/sh
-
-#set -x
+# -*- mode: shell-script -*-
 
 test_dir=$(cd $(dirname $0) && pwd)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
@@ -29,7 +26,6 @@ test_virtualenvwrapper_initialize() {
         assertTrue "Global $WORKON_HOME/$hook was not created" "[ -f $WORKON_HOME/$hook ]"
         assertTrue "Global $WORKON_HOME/$hook is not executable" "[ -x $WORKON_HOME/$hook ]"
     done
-    assertTrue "Log file was not created" "[ -f $WORKON_HOME/hook.log ]"
     export pre_test_dir=$(cd "$test_dir"; pwd)
     echo "echo GLOBAL initialize >> \"$pre_test_dir/catch_output\"" >> "$WORKON_HOME/initialize"
     virtualenvwrapper_initialize
@@ -87,22 +83,39 @@ test_virtualenvwrapper_verify_workon_home_missing_dir_grep_options() {
 test_python_interpreter_set_incorrectly() {
     return_to="$(pwd)"
     cd "$WORKON_HOME"
-    mkvirtualenv no_wrappers
-    expected="ImportError: No module named virtualenvwrapper.hook_loader"
+    mkvirtualenv no_wrappers >/dev/null 2>&1
+	RC=$?
+	assertEquals "mkvirtualenv return code wrong" "0" "$RC"
+    expected="No module named virtualenvwrapper"
     # test_shell is set by tests/run_tests
     if [ "$test_shell" = "" ]
     then
         export test_shell=$SHELL
     fi
-    subshell_output=$(VIRTUALENVWRAPPER_PYTHON="$WORKON_HOME/no_wrappers/bin/python" $test_shell $return_to/virtualenvwrapper.sh 2>&1)
+    outfilename="$WORKON_HOME/test_out.$$"
+    subshell_output=$(VIRTUALENVWRAPPER_PYTHON="$WORKON_HOME/no_wrappers/bin/python" $test_shell $return_to/virtualenvwrapper.sh >"$outfilename" 2>&1)
     #echo "$subshell_output"
-    echo "$subshell_output" | grep -q "$expected" 2>&1
+    cat "$outfilename" | sed "s/'//g" | grep -q "$expected" 2>&1
     found_it=$?
     #echo "$found_it"
-    assertTrue "Expected \'$expected\', got: \'$subshell_output\'" "[ $found_it -eq 0 ]"
-    assertFalse "Failed to detect invalid Python location" "VIRTUALENVWRAPPER_PYTHON=$VIRTUAL_ENV/bin/python $SHELL $return_to/virtualenvwrapper.sh >/dev/null 2>&1"
+    assertTrue "Expected \'$expected\', got: \'$(cat "$outfilename")\'" "[ $found_it -eq 0 ]"
+    assertFalse "Failed to detect invalid Python location" "VIRTUALENVWRAPPER_PYTHON=$VIRTUAL_ENV/bin/python virtualenvwrapper_run_hook initialize >/dev/null 2>&1"
     cd "$return_to"
     deactivate
+}
+
+test_virtualenvwrapper_verify_virtualenv(){
+    assertTrue "Verified unable to verify virtualenv" virtualenvwrapper_verify_virtualenv
+
+    VIRTUALENVWRAPPER_VIRTUALENV="thiscannotpossiblyexist123"
+    assertFalse "Incorrectly verified virtualenv" virtualenvwrapper_verify_virtualenv
+}
+
+test_virtualenvwrapper_verify_virtualenv_clone(){
+    assertTrue "Verified unable to verify virtualenv_clone" virtualenvwrapper_verify_virtualenv_clone
+
+    VIRTUALENVWRAPPER_VIRTUALENV_CLONE="thiscannotpossiblyexist123"
+    assertFalse "Incorrectly verified virtualenv_clone" virtualenvwrapper_verify_virtualenv_clone
 }
 
 . "$test_dir/shunit2"

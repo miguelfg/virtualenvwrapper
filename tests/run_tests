@@ -1,9 +1,3 @@
-#!/bin/sh
-
-##
-## ONLY RUN THIS VIA TOX
-##
-
 #set -x
 
 envdir="$1"
@@ -19,7 +13,7 @@ then
     fi
 fi
 
-# Force the tox virtualenv to be active.  
+# Force the tox virtualenv to be active.
 #
 # Since this script runs from within a separate shell created by tox,
 # the name of the virtualenv (in $VIRTUAL_ENV) is inherited, but the
@@ -27,14 +21,19 @@ fi
 # are *not* inherited.
 #
 source "$envdir/bin/activate"
+TMPDIR="$envdir/tmp"
+export TMPDIR
+mkdir -p "$TMPDIR"
 
 # Set up virtualenvwrapper.hook_loader to print more details than usual for debugging.
 #export HOOK_VERBOSE_OPTION=-vvv
-export HOOK_VERBOSE_OPTION="-q"
+HOOK_VERBOSE_OPTION="-q"
+export HOOK_VERBOSE_OPTION
 
 # Force virtualenvwrapper to use the python interpreter in the
 # tox-created virtualenv.
-export VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python"
+VIRTUALENVWRAPPER_PYTHON="$envdir/bin/python"
+export VIRTUALENVWRAPPER_PYTHON
 
 # Clear any user settings for the hook directory or log directory
 unset VIRTUALENVWRAPPER_HOOK_DIR
@@ -47,27 +46,25 @@ unset VIRTUALENVWRAPPER_VIRTUALENV_ARGS
 for test_script in $scripts
 do
 
-    for test_shell in bash ksh zsh
-    do
-        test_shell_opts=
-        if [ $test_shell = "zsh" ]; then
-            test_shell_opts="-o shwordsplit"
-        fi
-        export test_shell=$(which $test_shell)
+    echo
+    echo '********************************************************************************'
+    echo "Running $test_script"
+    echo "  VIRTUAL_ENV=$VIRTUAL_ENV"
+    echo "  VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON"
+    echo "    $($VIRTUALENVWRAPPER_PYTHON -V 2>&1)"
+    echo "  PYTHONPATH=$PYTHONPATH"
+    echo "  SHELL=$SHELL"
+    echo "  BASH_VERSION=$BASH_VERSION"
+    echo "  ZSH_VERSION=$ZSH_VERSION"
+    echo "  KSH_VERSION=$KSH_VERSION"
+    echo "  virtualenv=$(which virtualenv)"
+    echo "  ZSH=$ZSH_NAME $ZSH_EVAL_CONTEXT"
+    echo
+    SHUNIT_PARENT="$test_script"
+    export SHUNIT_PARENT
+    $test_shell_opts $test_script || exit 1
+    echo
 
-        echo
-        echo '********************************************************************************'
-        echo "Running $test_script"
-        echo "  VIRTUAL_ENV=$VIRTUAL_ENV"
-        echo "  VIRTUALENVWRAPPER_PYTHON=$VIRTUALENVWRAPPER_PYTHON"
-        echo "    $($VIRTUALENVWRAPPER_PYTHON -V 2>&1)"
-        echo "  PYTHONPATH=$PYTHONPATH"
-        echo "  SHELL=$test_shell"
-        echo
-        export SHUNIT_PARENT="$test_script"
-        $test_shell $test_shell_opts $test_script || exit 1
-        echo
-    done
 done
 
 exit 0

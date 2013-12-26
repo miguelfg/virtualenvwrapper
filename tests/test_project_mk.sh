@@ -1,11 +1,7 @@
-#!/bin/sh
-
-#set -x
+# -*- mode: shell-script -*-
 
 test_dir=$(dirname $0)
-
-export WORKON_HOME="$(echo ${TMPDIR:-/tmp}/WORKON_HOME | sed 's|//|/|g')"
-export PROJECT_HOME="$(echo ${TMPDIR:-/tmp}/PROJECT_HOME | sed 's|//|/|g')"
+source "$test_dir/setup.sh"
 
 oneTimeSetUp() {
     rm -rf "$WORKON_HOME"
@@ -50,7 +46,7 @@ test_hooks () {
 
     output=$(cat "$WORKON_HOME/catch_output")
 
-    expected="GLOBAL premkproject $PROJECT_HOME myproject3
+    expected="GLOBAL premkproject $WORKON_HOME myproject3
 GLOBAL postmkproject $PROJECT_HOME/myproject3"
     assertSame "$expected" "$output"
 

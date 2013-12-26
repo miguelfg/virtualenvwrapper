@@ -1,3 +1,5 @@
+..   -*- mode: rst -*-
+
 #################
 virtualenvwrapper
 #################
@@ -25,7 +27,7 @@ Características
 6. Sistema de plugins para la creación de extensiones compartibles.
 
 Rich Leland ha grabado un pequeño `screencast
-<http://mathematism.com/2009/jul/30/presentation-pip-and-virtualenv/>`__
+<http://mathematism.com/2009/07/30/presentation-pip-and-virtualenv/>`__
 mostrando las características de virtualenvwrapper.
 
 
@@ -52,7 +54,7 @@ Contribuciones
 Antes de contribuir con nuevas características al *core* de virtualenvwrapper,
 por favor considera, en vez, si no debe ser implementada como una extensión.
 
-Ve a la `documentación para desarrolladores
+Ve a la `documentación para desarrolladores 
 <http://www.doughellmann.com/docs/virtualenvwrapper/developers.html>`__
 por trucos sobre parches.
 

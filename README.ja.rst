@@ -1,8 +1,10 @@
+..   -*- mode: rst -*-
+
 #################
 virtualenvwrapper
 #################
 
-virtualenvwrapper は Ian Bicking の
+virtualenvwrapper は Ian Bicking の 
 `virtualenv <http://pypi.python.org/pypi/virtualenv>`_ ツールの
 拡張機能です。この拡張機能は仮想環境の作成・削除を行ったり、
 開発ワークフローを管理するラッパーを提供します。このラッパーを
@@ -26,7 +28,7 @@ virtualenvwrapper は Ian Bicking の
 6. さらに共有可能な拡張機能を作成できるプラグインシステム(:ref:`plugins` を参照)
 
 Rich Leland は virtualenvwrapper の機能を誇示するために短い
-`スクリーンキャスト <http://mathematism.com/2009/jul/30/presentation-pip-and-virtualenv/>`__
+`スクリーンキャスト <http://mathematism.com/2009/07/30/presentation-pip-and-virtualenv/>`__
 を作成しました。
 
 ============
@@ -34,7 +36,7 @@ Rich Leland は virtualenvwrapper の機能を誇示するために短い
 ============
 
 インストールとインフラを設定するには
-`プロジェクトのドキュメント <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__
+`プロジェクトのドキュメント <http://www.doughellmann.com/docs/virtualenvwrapper/ja/>`__ 
 を参照してください。
 
 サポートシェル
@@ -58,7 +60,7 @@ virtualenvwrapper は Python 2.4 - 2.7 でテストされています。
 1.x からのアップグレード
 ========================
 
-ラッパー関数を含むシェルスクリプトは 2.x バージョンで bash
+ラッパー関数を含むシェルスクリプトは 2.x バージョンで bash 
 以外のシェルをサポートするためにその名前が変更されました。
 あなたの起動ファイルの ``source /usr/local/bin/virtualenvwrapper_bashrc`` を
 ``source /usr/local/bin/virtualenvwrapper.sh`` へ変更してください。
