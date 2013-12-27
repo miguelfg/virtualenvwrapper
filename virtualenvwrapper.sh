@@ -659,7 +659,7 @@ function workon {
                 virtualenvwrapper_workon_help;
                 return 0;;
             -c|--create)
-                mkvirtualenv;
+               echo `mkvirtualenv $1`;
                 return 0;;
         esac
         i=$(( $i + 1 ))
