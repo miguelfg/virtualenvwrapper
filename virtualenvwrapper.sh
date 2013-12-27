@@ -225,8 +225,8 @@ function virtualenvwrapper_run_hook {
         source "$hook_script"
     elif [ "${1}" = "initialize" ]
     then
-        cat - 1>&2 <<EOF 
-virtualenvwrapper.sh: There was a problem running the initialization hooks. 
+        cat - 1>&2 <<EOF
+virtualenvwrapper.sh: There was a problem running the initialization hooks.
 
 If Python could not import the module virtualenvwrapper.hook_loader,
 check that virtualenv has been installed for
@@ -517,7 +517,7 @@ function rmvirtualenv {
 # List the available environments.
 function virtualenvwrapper_show_workon_options {
     virtualenvwrapper_verify_workon_home || return 1
-    # NOTE: DO NOT use ls or cd here because colorized versions spew control 
+    # NOTE: DO NOT use ls or cd here because colorized versions spew control
     #       characters into the output list.
     # echo seems a little faster than find, even with -depth 3.
     #
@@ -527,7 +527,7 @@ function virtualenvwrapper_show_workon_options {
     # 2. Strip the WORKON_HOME prefix from each name.
     # 3. Strip the bindir/activate script suffix.
     # 4. Format the output to show one name on a line.
-    # 5. Eliminate any lines with * on them because that means there 
+    # 5. Eliminate any lines with * on them because that means there
     #    were no envs.
     (echo $WORKON_HOME/*/$VIRTUALENVWRAPPER_ENV_BIN_DIR/activate) 2>/dev/null \
         | command \sed "s|$WORKON_HOME/||g" \
@@ -639,6 +639,7 @@ function virtualenvwrapper_workon_help {
 #
 # Usage: workon [environment_name]
 #
+#TODO: --create
 function workon {
     in_args=( "$@" )
 
@@ -656,6 +657,9 @@ function workon {
         case "$a" in
             -h|--help)
                 virtualenvwrapper_workon_help;
+                return 0;;
+            -c|--create)
+                mkvirtualenv;
                 return 0;;
         esac
         i=$(( $i + 1 ))
@@ -872,7 +876,7 @@ function cpvirtualenv {
     typeset src_name="$1"
     typeset trg_name="$2"
     typeset src
-    typeset trg 
+    typeset trg
 
     # without a source there is nothing to do
     if [ "$src_name" = "" ]; then
@@ -916,10 +920,10 @@ function cpvirtualenv {
 
     echo "Copying $src_name as $trg_name..."
     (
-        [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT 
+        [ -n "$ZSH_VERSION" ] && setopt SH_WORD_SPLIT
         virtualenvwrapper_cd "$WORKON_HOME" &&
-        "$VIRTUALENVWRAPPER_VIRTUALENV_CLONE" "$src" "$trg" 
-        [ -d "$trg" ] && 
+        "$VIRTUALENVWRAPPER_VIRTUALENV_CLONE" "$src" "$trg"
+        [ -d "$trg" ] &&
             virtualenvwrapper_run_hook "pre_cpvirtualenv" "$src" "$trg_name" &&
             virtualenvwrapper_run_hook "pre_mkvirtualenv" "$trg_name"
     )
