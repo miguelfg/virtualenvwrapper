@@ -633,6 +633,11 @@ function virtualenvwrapper_workon_help {
     echo ""
     echo "           Show this help message."
     echo ""
+    echo "       workon env_name (-c|--create)"
+    echo ""
+    echo "           Creates a new environment"
+    echo "           using env_name."
+    echo ""
 }
 
 # List or change working virtual environments
