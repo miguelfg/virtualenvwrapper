@@ -9,7 +9,7 @@ oneTimeSetUp() {
     source "$test_dir/../virtualenvwrapper.sh"
     mkvirtualenv "env1" >/dev/null 2>&1
     mkvirtualenv "env2" >/dev/null 2>&1
-    deactivate >/dev/null 2>&1 
+    deactivate >/dev/null 2>&1
 }
 
 oneTimeTearDown() {
@@ -22,11 +22,16 @@ setUp () {
 }
 
 tearDown () {
-    deactivate >/dev/null 2>&1 
+    deactivate >/dev/null 2>&1
 }
 
 test_workon () {
     workon env1
+}
+
+test_workon_with_create () {
+    rmvirtualenv env1
+    workon env1 --create
     assertTrue virtualenvwrapper_verify_active_environment
     assertSame "env1" $(basename "$VIRTUAL_ENV")
 }
@@ -47,7 +52,7 @@ test_workon_activate_hooks () {
     touch "$test_dir/catch_output"
 
     workon env1
-    
+
     output=$(cat "$test_dir/catch_output")
     expected="GLOBAL preactivate
 ENV preactivate
@@ -55,7 +60,7 @@ GLOBAL postactivate
 ENV postactivate"
 
     assertSame "$expected"  "$output"
-    
+
     for t in pre post
     do
         rm -f "$WORKON_HOME/env1/bin/${t}activate"
