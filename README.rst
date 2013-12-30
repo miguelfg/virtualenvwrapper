@@ -26,6 +26,8 @@ My Fork's Features
 
 2. Create new env using workon: ``workon env --create`` or ``workon env -c``
 
+3. ``lsvirtualenv`` with brief option as default
+
 ========
 Features
 ========
@@ -79,7 +81,7 @@ Support
 
 Join the `virtualenvwrapper Google Group
 <http://groups.google.com/group/virtualenvwrapper/>`__ to discuss
-issues and features.  
+issues and features.
 
 Report bugs via the `bug tracker on BitBucket
 <http://bitbucket.org/dhellmann/virtualenvwrapper/>`__.
