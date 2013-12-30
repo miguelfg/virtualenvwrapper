@@ -548,7 +548,7 @@ function _lsvirtualenv_usage {
 # Usage: lsvirtualenv [-l]
 function lsvirtualenv {
 
-    typeset long_mode=true
+    typeset long_mode=false
     if command -v "getopts" &> /dev/null
     then
         # Use getopts when possible
