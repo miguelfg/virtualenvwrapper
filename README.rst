@@ -18,6 +18,14 @@ PWD varied depending on the hook). The *shell* portion of any hook
 (anything sourced by the user's shell when the hook is run) is still
 run in the same place as before.
 
+==================
+My Fork's Features
+==================
+
+1. Support to remove several envs at once: ``rmvirtualenv e1 e2``...
+
+2. Create new env using workon: ``workon env --create`` or ``workon env -c``
+
 ========
 Features
 ========
